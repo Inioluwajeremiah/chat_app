@@ -13,7 +13,10 @@ import { app, server } from "./src/socketio/socketServer.js";
 dotenv.config();
 
 // set cors
-app.use(cors());
+// app.use(cors());
+cors({
+  origin: ["http://localhost:7000", "https://chat-app-toyj.onrender.com"],
+});
 // body paser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

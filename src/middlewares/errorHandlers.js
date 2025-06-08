@@ -52,7 +52,7 @@ const globalError = (error, req, res, next) => {
 
   if (process.env.NODE_ENV === "dev") {
     developmentErrors(res, error);
-  } else if (process.env.NODE_ENV === "prod") {
+  } else if (process.env.NODE_ENV === "production") {
     if (error.name === "CastError") error = castErrorHandler(error);
     if (error.code === 11000) error = duplicateKeyErrorHandler(error);
     if (error.name === "ValidationError") error = validationErrorHandler(error);

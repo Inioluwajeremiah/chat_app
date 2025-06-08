@@ -8,14 +8,14 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: [
-      "http://localhost:3000",
-      "exp://127.0.0.1:8081",
-      "http://localhost:5175",
-      "http://172.27.62.117:8081",
-      "http://192.168.65.46:8082:",
-    ],
-    // origin: "*",
+    // origin: [
+    //   "http://localhost:3000",
+    //   "exp://127.0.0.1:8081",
+    //   "http://localhost:5175",
+    //   "http://172.27.62.117:8081",
+    //   "http://192.168.65.46:8082:",
+    // ],
+    origin: "*",
     methods: ["POST", "GET"],
   },
 });
