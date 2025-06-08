@@ -93,7 +93,7 @@ const getUserChats = tryCatchAsyncMiddleWare(async (req, res, next) => {
 const getUserChat = tryCatchAsyncMiddleWare(async (req, res, next) => {
   const { userId, user2Id } = req.params;
   const userchat = await ChatModel.findOne({
-    users: { $all: [(userId, user2Id)] },
+    users: { $all: [userId, user2Id] },
     deletedBy: { $ne: userId },
   });
   if (userchat) {
