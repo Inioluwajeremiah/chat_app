@@ -29,16 +29,20 @@ const getReceiverSocketId = (receiverId) => {
 
 io.on("connection", (socket) => {
   console.log("socket connected ==> ", socket.id);
+
   // add new User
   socket.on("addNewUser", (userId) => {
     // if user is not added previously
-    if (!usersOnline.some((user) => user.userId === userId)) {
+    socket.userId = userId;
+    if (
+      userId !== null &&
+      !usersOnline.some((user) => user.userId === userId)
+    ) {
       usersOnline.push({
         userId: userId,
         socketId: socket.id,
       });
       console.log("New User Connected", userId);
-      console.log(" Connected users online", usersOnline);
     }
 
     console.log(" Connected users online", usersOnline);
@@ -46,10 +50,21 @@ io.on("connection", (socket) => {
     io.emit("getUsersOnline", usersOnline);
   });
 
+  // remove user from active users
+  socket.on("removeUser", (userId) => {
+    // usersOnline = usersOnline.filter((user) => user.socketId !== socket.id);
+    usersOnline = usersOnline.filter((user) => user.userId !== userId);
+    console.log("User Disconnected removeUser", usersOnline);
+    // send all active users to all users
+    io.emit("getUsersOnline", usersOnline);
+  });
+
   socket.on("disconnect", () => {
     // remove user from active users
-    usersOnline = usersOnline.filter((user) => user.socketId !== socket.id);
-    console.log("User Disconnected", usersOnline);
+    // usersOnline = usersOnline.filter((user) => user.socketId !== socket.id);
+    usersOnline = usersOnline.filter((user) => user.userId !== socket.userId);
+    // console.log("🔌 User disconnected:", socket.userId, socket.id);
+    // console.log("User Disconnected", usersOnline);
     // send all active users to all users
     io.emit("getUsersOnline", usersOnline);
   });
