@@ -41,6 +41,7 @@ io.on("connection", (socket) => {
       console.log(" Connected users online", usersOnline);
     }
 
+    console.log(" Connected users online", usersOnline);
     // send all active users to new user
     io.emit("getUsersOnline", usersOnline);
   });
